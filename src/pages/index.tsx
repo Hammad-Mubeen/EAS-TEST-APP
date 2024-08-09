@@ -8,23 +8,29 @@ import { File } from 'buffer';
 // @ts-ignore
 import ReactConfetti from "react-confetti";
 const { createHash } = require('crypto');
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+	const router = useRouter();
 	const [file, setFile] = useState<File | null>(null);
 	const [recipient, setRecipient] = useState('');
 	const [docHash, setdocHash] = useState('');
 	const [note, setNote] = useState('');
 	const [openModal, setOpenModal] = useState(false);
   	const [showConfetti, setShowConfetti] = useState(false);
+	let [UID,setUID] = useState<String | null>(null);
 	const picker = useId();
-
-	let [OnChainUIDLink,setOnChainUIDLink] = useState<String | null>(null);
 	
 	const handleCloseModal = () => {
 		setOpenModal(false);
+		if (localStorage.getItem("UID")) {
+			localStorage.removeItem("UID");
+		}
+		localStorage.setItem("UID", UID as string);
+		router.push("./verifyDoc");
 	};
 
-	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const fileData = event.target.files?.[0];
 		if (fileData) {
 		  var reader = new FileReader();
@@ -48,7 +54,7 @@ export default function Home() {
 	async function callOnChainAttestationFunction(){
 		var createOnChainAttestationResult = await createOnChainAttestation(recipient,docHash,note);
 		console.log("Attestation UID: " + process.env.NEXT_PUBLIC_ATTESTATION_LINK! + createOnChainAttestationResult);
-		setOnChainUIDLink(process.env.NEXT_PUBLIC_ATTESTATION_LINK! + createOnChainAttestationResult);
+		setUID(createOnChainAttestationResult);
 		setOpenModal(true);
     	setShowConfetti(true);
 	}
@@ -143,7 +149,7 @@ export default function Home() {
 							name='file'
 							className='hidden'
 							id={picker}
-							onChange={handleImageChange}
+							onChange={handleFileChange}
 						/>
 						</div>
 						<div className='relative w-full h-full overflow-hidden flex items-center justify-center'>
@@ -171,12 +177,12 @@ export default function Home() {
 					OnChain Attestation Successfull sepolia on testnet chain
 					</p>
 					<a
-					href={`${OnChainUIDLink}`}
+					href={`${process.env.NEXT_PUBLIC_ATTESTATION_LINK!}${UID}`}
 					rel="noopenner noreferrer"
 					target="_blank"
 					>
 					<p className="text-base  mt-4 break-words text-[#0000EE]">
-						{`${OnChainUIDLink}`}
+						{`${process.env.NEXT_PUBLIC_ATTESTATION_LINK!}${UID}`}
 					</p>
 					</a>
 					<button
