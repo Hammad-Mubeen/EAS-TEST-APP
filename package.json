@@ -1,0 +1,27 @@
+{
+  "name": "EASTest-backend-app",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "scripts:createOnChainAttestation": "node ./scripts/createOnChainAttestation",
+    "scripts:updateOnChainAttestation": "node ./scripts/updateOnChainAttestation",
+    "scripts:createAndVerifyOffChainAttestation": "node ./scripts/createAndVerifyOffChainAttestation",
+    "scripts:accessAttestation": "node ./scripts/accessAttestation",
+    "scripts:uploadOffChainAttestationToIPFS": "node ./scripts/uploadOffChainAttestationToIPFS"
+  },
+  "dependencies": {
+    "@ethereum-attestation-service/eas-sdk": "^2.4.0",
+    "axios": "^1.7.2",
+    "cookie-parser": "~1.4.4",
+    "crypto": "^1.0.1",
+    "debug": "~2.6.9",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.1",
+    "express": "^4.19.2",
+    "http-errors": "~1.6.3",
+    "ipfs-api": "^26.1.2",
+    "jade": "^0.29.0",
+    "morgan": "~1.9.1"
+  }
+}
