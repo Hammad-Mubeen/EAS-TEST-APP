@@ -4,7 +4,6 @@ import provider from '../ethers/ether';
 
 const EASContractAddress = process.env.NEXT_PUBLIC_EAS_CONTRACT_ADDRESS; // Sepolia v0.26
 const schemaUID = process.env.NEXT_PUBLIC_SCHEMA_UID;
-const docHash = process.env.NEXT_PUBLIC_DOC_HASH;
 
 export default async function createOnChainAttestation(recipient,docHash,note)
 {

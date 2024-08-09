@@ -61,7 +61,7 @@ export default function Home() {
 			<div className="flex flex-col  items-center" style={{ margin: 50}}>
 				<Card className="border rounded-md" style={{ width: 650, borderRadius: 10 }}>
 				<CardHeader >
-					<div style={{ marginLeft:20,marginTop:20, fontSize:20,fontWeight:'bold'}}>
+					<div style={{ marginLeft:20,marginTop:20, fontSize:25,fontWeight:'bold',color:"#3e4c59"}}>
 						<text>New Attestation</text>
 					</div>
 				</CardHeader>
@@ -81,6 +81,7 @@ export default function Home() {
 							width: 607,
 							marginTop:7,
 							outline: "none",
+							padding: '10px'
 						}}
 						type="recipient"
 						name="recipient"
@@ -96,6 +97,7 @@ export default function Home() {
 							width: 607,
 							marginTop:7,
 							outline: "none",
+							padding: '10px'
 						}}
 						type="hash"
 						name="hash"
@@ -111,6 +113,7 @@ export default function Home() {
 							width: 607,
 							marginTop:7,
 							outline: "none",
+							padding: '10px'
 						}}
 						type="note"
 						name="note"
