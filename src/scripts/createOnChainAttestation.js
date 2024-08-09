@@ -6,23 +6,22 @@ const EASContractAddress = process.env.NEXT_PUBLIC_EAS_CONTRACT_ADDRESS; // Sepo
 const schemaUID = process.env.NEXT_PUBLIC_SCHEMA_UID;
 const docHash = process.env.NEXT_PUBLIC_DOC_HASH;
 
-export default async function createOnChainAttestation()
+export default async function createOnChainAttestation(recipient,docHash,note)
 {
     const signer = await provider.getSigner();
     const eas = new EAS(EASContractAddress);
     eas.connect(signer);
 
-    const schemaEncoder = new SchemaEncoder("uint256 timestamp,string metadata,bytes32 contentHash");
+    const schemaEncoder = new SchemaEncoder("bytes32 hashOfDocument,string note");
     const encodedData = schemaEncoder.encodeData([
-      { name: "timestamp", value: "1720530959", type: "uint256" },
-      { name: "metadata", value: "This is my resume.", type: "string" },
-      { name: "contentHash", value: docHash, type: "bytes32" }
+        { name: "hashOfDocument", value: docHash, type: "bytes32" },
+        { name: "note", value: note, type: "string" }
     ]);
 
     const tx = await eas.attest({
         schema: schemaUID,
         data: {
-            recipient: "0x0000000000000000000000000000000000000000",
+            recipient: recipient,
             expirationTime: 0,
             revocable: true, // Be aware that if your schema is not revocable, this MUST be false
             data: encodedData,

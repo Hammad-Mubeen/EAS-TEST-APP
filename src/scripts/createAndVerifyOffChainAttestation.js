@@ -16,11 +16,10 @@ export default async function createOffChainAttestation()
     eas.connect(signer);
     const offchain = await eas.getOffchain();
     
-    const schemaEncoder = new SchemaEncoder("uint256 timestamp,string metadata,bytes32 contentHash");
+    const schemaEncoder = new SchemaEncoder("bytes32 hashOfDocument,string note");
     const encodedData = schemaEncoder.encodeData([
-      { name: "timestamp", value: timestamp, type: "uint256" },
-      { name: "metadata", value: "This is my resume.", type: "string" },
-      { name: "contentHash", value: docHash, type: "bytes32" }
+        { name: "hashOfDocument", value: docHash, type: "bytes32" },
+        { name: "note", value: "This is a document", type: "string" }
     ]);
 
     const offchainAttestation = await offchain.signOffchainAttestation({
